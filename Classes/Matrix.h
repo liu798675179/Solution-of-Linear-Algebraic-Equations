@@ -9,7 +9,7 @@
 using std::vector;
 using std::string;
 
-typedef vector<Fraction> vF;
+typedef vector<Fraction>         vF;
 typedef vector<vector<Fraction>> v_vF;
 
 class Matrix {
