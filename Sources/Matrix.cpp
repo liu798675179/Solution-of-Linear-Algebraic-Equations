@@ -418,6 +418,7 @@ Fraction Matrix::Frac_abs(Fraction &temp_frac) {                                
 }
 
 Matrix Matrix::LUdcmp() {                                                 // LU Decomposition.
+	this->square();
 	Matrix temp_M;
 	temp_M.resize(row, col);
 	temp_M.matrix = matrix;
@@ -477,6 +478,7 @@ Matrix Matrix::LUdcmp() {                                                 // LU 
 }
 
 Fraction Matrix::det() {                                                 // Determinant of  a matrix.
+	this->square();
 	Matrix temp_M;
 	temp_M.resize(row, col);
 	temp_M.matrix = matrix;
