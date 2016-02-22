@@ -410,7 +410,7 @@ void Matrix::cin_in(string &temp_str) {                                         
 }
 
 bool Matrix::square() const {                                                           // Check whether the square.
-	return (!matrix.empty() && row != col);
+	return (!matrix.empty() && row == col);
 }
 
 Fraction Matrix::Frac_abs(Fraction &temp_frac) {                                        // Absolute value of a fraction.
