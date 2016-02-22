@@ -75,8 +75,8 @@ public:
 	Fraction det();                                                           // Determinant of  a matrix.
 
 private:
-	size_t row = 0;                                                           // rows.
-	size_t col = 0;                                                           // columns.
+	size_t row = 0;                                                           // Size of rows.
+	size_t col = 0;                                                           // Size of columns.
 	v_vF   matrix;
 };
 
