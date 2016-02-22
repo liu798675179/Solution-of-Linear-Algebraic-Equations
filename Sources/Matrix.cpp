@@ -418,123 +418,133 @@ Fraction Matrix::Frac_abs(Fraction &temp_frac) {                                
 }
 
 Matrix Matrix::LUdcmp() {                                                 // LU Decomposition.
-	this->square();
 	Matrix temp_M;
-	temp_M.resize(row, col);
-	temp_M.matrix = matrix;
-	size_t n(temp_M.row);
-	v_vF lu(temp_M.matrix);
-	vector<size_t> index(n);
-	const Fraction TINY = 1;
-	size_t i, imax, j, k;
-	Fraction big, temp;
-	vF vv(n);
-	Fraction d = 1;
+	if (this->square()) {
+		temp_M.resize(row, col);
+		temp_M.matrix = matrix;
+		size_t n(temp_M.row);
+		v_vF lu(temp_M.matrix);
+		vector<size_t> index(n);
+		const Fraction TINY = 1;
+		size_t i, imax, j, k;
+		Fraction big, temp;
+		vF vv(n);
+		Fraction d = 1;
 
-	for (i = 0; i < n; ++i) {
-		big = 0;
-		for (j = 0; j < n; ++j) {
-			if ((temp = Frac_abs(lu[i][j])) > big) {
-				big = temp;
-			}
-		}
-		if (big == 0) {
-			throw runtime_error("Singular matrix in LUdcmp");
-		}
-		vv[i] = 1 / big;
-	}
-	for (k = 0; k < n; ++k) {
-		big = 0;
-		for (i = k; i < n; ++i) {
-			temp = vv[i] * Frac_abs(lu[i][k]);
-			if (temp > big) {
-				big = temp;
-				imax = i;
-			}
-		}
-		if (k != imax) {
+		for (i = 0; i < n; ++i) {
+			big = 0;
 			for (j = 0; j < n; ++j) {
-				temp = lu[imax][j];
-				lu[imax][j] = lu[k][j];
-				lu[k][j] = temp;
+				if ((temp = Frac_abs(lu[i][j])) > big) {
+					big = temp;
+				}
 			}
-			d = 0 - d;
-			vv[imax] = vv[k];
+			if (big == 0) {
+				throw runtime_error("Singular matrix in LUdcmp");
+			}
+			vv[i] = 1 / big;
 		}
-		index[k] = imax;
-		if (lu[k][k] == 0) {
-			lu[k][k] = TINY;
-		}
-		for (i = k + 1; i < n; ++i) {
-			temp = lu[i][k] /= lu[k][k];
-			for (j = k + 1; j < n; ++j) {
-				lu[i][j] -= temp * lu[k][j];
+		for (k = 0; k < n; ++k) {
+			big = 0;
+			for (i = k; i < n; ++i) {
+				temp = vv[i] * Frac_abs(lu[i][k]);
+				if (temp > big) {
+					big = temp;
+					imax = i;
+				}
+			}
+			if (k != imax) {
+				for (j = 0; j < n; ++j) {
+					temp = lu[imax][j];
+					lu[imax][j] = lu[k][j];
+					lu[k][j] = temp;
+				}
+				d = 0 - d;
+				vv[imax] = vv[k];
+			}
+			index[k] = imax;
+			if (lu[k][k] == 0) {
+				lu[k][k] = TINY;
+			}
+			for (i = k + 1; i < n; ++i) {
+				temp = lu[i][k] /= lu[k][k];
+				for (j = k + 1; j < n; ++j) {
+					lu[i][j] -= temp * lu[k][j];
+				}
 			}
 		}
-	}
-	temp_M.matrix = lu;
+		temp_M.matrix = lu;
 
-	return temp_M;
+		return temp_M;
+	}
+	else {
+		throw runtime_error("The matrix is not square.");
+		return temp_M;
+	}
 }
 
 Fraction Matrix::det() {                                                 // Determinant of  a matrix.
-	this->square();
 	Matrix temp_M;
-	temp_M.resize(row, col);
-	temp_M.matrix = matrix;
-	size_t n(temp_M.row);
-	v_vF lu(temp_M.matrix);
-	vector<size_t> index(n);
-	const Fraction TINY = 1;
-	size_t i, imax, j, k;
-	Fraction big, temp;
-	vF vv(n);
 	Fraction d = 1;
+	if (this->square()) {
+		temp_M.resize(row, col);
+		temp_M.matrix = matrix;
+		size_t n(temp_M.row);
+		v_vF lu(temp_M.matrix);
+		vector<size_t> index(n);
+		const Fraction TINY = 1;
+		size_t i, imax, j, k;
+		Fraction big, temp;
+		vF vv(n);
 
-	for (i = 0; i < n; ++i) {
-		big = 0;
-		for (j = 0; j < n; ++j) {
-			if ((temp = Frac_abs(lu[i][j])) > big) {
-				big = temp;
-			}
-		}
-		if (big == 0) {
-			throw runtime_error("Singular matrix in LUdcmp");
-		}
-		vv[i] = 1 / big;
-	}
-	for (k = 0; k < n; ++k) {
-		big = 0;
-		for (i = k; i < n; ++i) {
-			temp = vv[i] * Frac_abs(lu[i][k]);
-			if (temp > big) {
-				big = temp;
-				imax = i;
-			}
-		}
-		if (k != imax) {
+		for (i = 0; i < n; ++i) {
+			big = 0;
 			for (j = 0; j < n; ++j) {
-				temp = lu[imax][j];
-				lu[imax][j] = lu[k][j];
-				lu[k][j] = temp;
+				if ((temp = Frac_abs(lu[i][j])) > big) {
+					big = temp;
+				}
 			}
-			d = 0 - d;
-			vv[imax] = vv[k];
+			if (big == 0) {
+				throw runtime_error("Singular matrix in LUdcmp");
+			}
+			vv[i] = 1 / big;
 		}
-		index[k] = imax;
-		if (lu[k][k] == 0) {
-			lu[k][k] = TINY;
-		}
-		for (i = k + 1; i < n; ++i) {
-			temp = lu[i][k] /= lu[k][k];
-			for (j = k + 1; j < n; ++j) {
-				lu[i][j] -= temp * lu[k][j];
+		for (k = 0; k < n; ++k) {
+			big = 0;
+			for (i = k; i < n; ++i) {
+				temp = vv[i] * Frac_abs(lu[i][k]);
+				if (temp > big) {
+					big = temp;
+					imax = i;
+				}
+			}
+			if (k != imax) {
+				for (j = 0; j < n; ++j) {
+					temp = lu[imax][j];
+					lu[imax][j] = lu[k][j];
+					lu[k][j] = temp;
+				}
+				d = 0 - d;
+				vv[imax] = vv[k];
+			}
+			index[k] = imax;
+			if (lu[k][k] == 0) {
+				lu[k][k] = TINY;
+			}
+			for (i = k + 1; i < n; ++i) {
+				temp = lu[i][k] /= lu[k][k];
+				for (j = k + 1; j < n; ++j) {
+					lu[i][j] -= temp * lu[k][j];
+				}
 			}
 		}
-	}
-	for (i = 0; i < n; ++i) {
-		d *= lu[i][i];
-	}
+		for (i = 0; i < n; ++i) {
+			d *= lu[i][i];
+		}
 
-	return d;
+		return d;
+	}
+	else {
+		throw runtime_error("The matrix is not square.");
+		return d;
+	}
 }
