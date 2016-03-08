@@ -182,12 +182,12 @@ std::istream& operator>> (std::istream &in, Matrix &temp_m) {
 	in >> temp_m.row;
 	in >> temp_m.col;
 	temp_m.matrix.resize(temp_m.row);
-	for (size_t i = 0; i < temp_m.row; ++i) {
-		temp_m.matrix[i].resize(temp_m.col);
+	for (auto &i : temp_m.matrix) {
+		i.resize(temp_m.col);
 	}
-	for (size_t i = 0; i < temp_m.row; ++i) {
-		for (size_t j = 0; j < temp_m.col; ++j) {
-			in >> temp_m.matrix[i][j];
+	for (auto &i : temp_m.matrix) {
+		for (auto &j : i) {
+			in >> j;
 		}
 	}
 	return in;
@@ -197,8 +197,8 @@ void Matrix::resize(const size_t &temp_row, const size_t &temp_col){            
 	row = temp_row;
 	col = temp_col;
 	matrix.resize(row);
-	for (size_t i = 0; i < row; ++i) {
-		matrix[i].resize(col);
+	for (auto &i : matrix) {
+		i.resize(col);
 	}
 }
 
@@ -208,8 +208,8 @@ void Matrix::add_row(size_t &temp_row, vF &temp_vcow) {                         
 	}
 	v_vF temp_vvF;
 	temp_vvF.resize(row + 1);
-	for (size_t i = 0; i < (row + 1); ++i) {
-		temp_vvF[i].resize(col);
+	for (auto &i : temp_vvF) {
+		i.resize(col);
 	}
 	for (size_t i = 0; i < temp_row; ++i) {
 		for (size_t j = 0; j < col; ++j) {
@@ -267,8 +267,8 @@ void Matrix::swap_row(size_t &temp_row1, size_t &temp_row2) {                   
 void Matrix::del_row(size_t &temp_row) {                                                  // Minus one row.
 	v_vF temp_vvF;
 	temp_vvF.resize(row - 1);
-	for (size_t i = 0; i < (row - 1); ++i) {
-		temp_vvF[i].resize(col);
+	for (auto &i : temp_vvF) {
+		i.resize(col);
 	}
 	for (size_t i = 0; i < temp_row; ++i) {
 		for (size_t j = 0; j < col; ++j) {
@@ -290,8 +290,8 @@ void Matrix::add_col(size_t &temp_col, vF &temp_vrow) {                         
 	}
 	v_vF temp_vvF;
 	temp_vvF.resize(row);
-	for (size_t i = 0; i < row; ++i) {
-		temp_vvF[i].resize(col + 1);
+	for (auto &i : temp_vvF) {
+		i.resize(col + 1);
 	}
 	for (size_t i = 0; i < row; ++i) {
 		for (size_t j = 0; j < temp_col; ++j) {
@@ -349,8 +349,8 @@ void Matrix::swap_col(size_t &temp_col1, size_t &temp_col2) {                   
 void Matrix::del_col(size_t &temp_col) {                                                 // Minus one column.
 	v_vF temp_vvF;
 	temp_vvF.resize(row);
-	for (size_t i = 0; i < row; ++i) {
-		temp_vvF[i].resize(col - 1);
+	for (auto &i : temp_vvF) {
+		i.resize(col - 1);
 	}
 	for (size_t i = 0; i < row; ++i) {
 		for (size_t j = 0; j < temp_col; ++j) {
@@ -386,9 +386,9 @@ Matrix Matrix::trans() {                                                        
 string Matrix::cout_out() const{                                                         // Output matrix.
 	ostringstream out;
 	out << row << " " << col << " ";
-	for (size_t i = 0; i < row; i++) {
-		for (size_t j = 0; j < col; j++) {
-			out << matrix[i][j] << " ";
+	for (auto &i : matrix) {
+		for (auto &j : i) {
+			out << j << " ";
 		}
 	}
 	return out.str();
@@ -399,12 +399,12 @@ void Matrix::cin_in(string &temp_str) {                                         
 	in >> row;
 	in >> col;
 	matrix.resize(row);
-	for (size_t i = 0; i < row; i++) {
-		matrix[i].resize(col);
+	for (auto &i : matrix) {
+		i.resize(col);
 	}
-	for (size_t i = 0; i < row; i++) {
-		for (size_t j = 0; j < col; j++) {
-			in >> matrix[i][j];
+	for (auto &i : matrix) {
+		for (auto &j : i) {
+			in >> j;
 		}
 	}
 }
