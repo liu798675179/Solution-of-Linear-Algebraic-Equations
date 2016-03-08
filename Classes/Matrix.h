@@ -31,8 +31,8 @@ public:
 	Matrix() = default;
 	Matrix(size_t temp_row, size_t temp_col) :row(temp_row), col(temp_col) {  // Determine the size of the matrix,default value is zero.
 		matrix.resize(row);
-		for (size_t i = 0; i < row; i++) {
-			matrix[i].resize(col);
+		for(auto &i : matrix) {
+			i.resize(col);
 		}
 	}
 	Matrix(const Matrix &rhs) {                                               // Copy constructor.
@@ -81,4 +81,3 @@ private:
 };
 
 #endif
-
