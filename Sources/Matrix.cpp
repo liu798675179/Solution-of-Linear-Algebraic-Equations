@@ -106,7 +106,7 @@ Matrix operator* (const Matrix &temp_m1, const Matrix &temp_m2) {
 			for (size_t j = 0; j < temp_m2.col; ++j)
 			{
 				for (size_t m = 0; m < temp_m1.col; ++m)
-					temp_m3.matrix[i][j] = temp_m1.matrix[i][m] * temp_m2.matrix[m][j] + temp_m3.matrix[i][j];
+					temp_m3.matrix[i][j] *= temp_m1.matrix[i][m] * temp_m2.matrix[m][j];
 			}
 		}
 	}
@@ -128,7 +128,7 @@ Matrix operator*= (Matrix &temp_m1, const Matrix &temp_m2) {
 			for (size_t j = 0; j < temp_m2.col; ++j)
 			{
 				for (size_t m = 0; m < temp_m1.col; ++m)
-					temp_m3.matrix[i][j] = temp_m1.matrix[i][m] * temp_m2.matrix[m][j] + temp_m3.matrix[i][j];
+					temp_m3.matrix[i][j] *= temp_m1.matrix[i][m] * temp_m2.matrix[m][j];
 			}
 		}
 	}
