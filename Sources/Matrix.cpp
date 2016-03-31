@@ -445,7 +445,7 @@ pair<v_vF, v_vF> Matrix::LUdcmp() {                                             
 			}
 		}
 
-		for (k = 0; k < n - 1; ++k) {
+		for (k = 0; k < n; ++k) {
 			for (i = k + 1; i < n; ++i) {
 				lu[i][k] = lu[i][k] / lu[k][k];
 				for (j = k + 1; j < n; ++j) {
