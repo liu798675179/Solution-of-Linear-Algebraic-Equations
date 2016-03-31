@@ -71,7 +71,7 @@ public:
 	void cin_in(string &);                                                    // Input matrix.
 	bool square() const;                                                      // Check whether the square. 
 	static Fraction Frac_abs(Fraction &);                                     // Absolute value of a fraction.
-	Matrix LUdcmp();                                                          // LU Decomposition.
+	pair<v_vF, v_vF> LUdcmp();                                                // LU Decomposition.
 	Fraction det();                                                           // Determinant of  a matrix.
 
 private:
