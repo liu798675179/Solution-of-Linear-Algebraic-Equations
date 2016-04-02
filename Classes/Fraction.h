@@ -36,7 +36,7 @@ private:
 	long long numerator = 0;
 	long long denominator = 1;
 
-	long long gcd(const long long, const long long);  // greatest common divisor
+	long long gcd(long long, long long);  // greatest common divisor
 	void rof();  // reduction of a fraction
 };
 
