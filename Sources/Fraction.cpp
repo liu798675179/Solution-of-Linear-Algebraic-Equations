@@ -2,13 +2,19 @@
 #include <cmath>
 #include <iostream>
 
-long long Fraction::gcd(const long long numerator, const long long denominator) {  // method of successive division
-	if (numerator < denominator)
-		return gcd(denominator, numerator);
-	if (numerator % denominator != 0)
-		return gcd(denominator, numerator % denominator);
-	else
-		return denominator;
+long long Fraction::gcd(long long numerator, long long denominator) {                           // method of successive division
+	long long temp;
+	if (numerator < denominator) {
+		temp = denominator;
+		denominator = numerator;
+		numerator = temp;
+	}
+	while (denominator != 0) {
+		temp = numerator % denominator;
+		numerator = denominator;
+		denominator = temp;
+	}
+	return numerator;
 }
 
 void Fraction::rof() {
