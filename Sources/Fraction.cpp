@@ -28,7 +28,7 @@ void Fraction::rof() {
 	}
 }
 
-                                                                                  // Operator overloading.
+ // Operator overloading.
 Fraction operator + (const Fraction &frac1, const Fraction &frac2) {
 	return Fraction(frac1.numerator * frac2.denominator + frac2.numerator * frac1.denominator, frac2.denominator * frac1.denominator);
 }
