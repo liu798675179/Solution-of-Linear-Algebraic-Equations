@@ -4,6 +4,7 @@
 #include <string>
 #include <sstream>
 #include <stdexcept>
+#include <utility>
 
 using std::vector;
 using std::string;
@@ -21,9 +22,9 @@ Matrix operator+ (const Matrix &temp_m1, const Matrix &temp_m2) {
 	if (temp_m1.row == temp_m2.row && temp_m1.col == temp_m2.col)                           // First judge M1 and M2 matrix are not the same type of matrix.
 	{
 		temp_m3.resize(temp_m1.row, temp_m1.col);
-		for (size_t i = 0; i < temp_m1.row; ++i)
+		for (size_t i = 0; i != temp_m1.row; ++i)
 		{
-			for (size_t j = 0; j < temp_m1.col; ++j)
+			for (size_t j = 0; j != temp_m1.col; ++j)
 			{
 				temp_m3.matrix[i][j] = temp_m1.matrix[i][j] + temp_m2.matrix[i][j];
 			}
@@ -40,9 +41,9 @@ Matrix operator+ (const Matrix &temp_m1, const Matrix &temp_m2) {
 Matrix operator+= (Matrix &temp_m1, const Matrix &temp_m2) {
 	if (temp_m1.row == temp_m2.row && temp_m1.col == temp_m2.col)
 	{
-		for (size_t i = 0; i < temp_m1.row; ++i)
+		for (size_t i = 0; i != temp_m1.row; ++i)
 		{
-			for (size_t j = 0; j < temp_m1.col; ++j)
+			for (size_t j = 0; j != temp_m1.col; ++j)
 			{
 				temp_m1.matrix[i][j] += temp_m2.matrix[i][j];
 			}
@@ -61,9 +62,9 @@ Matrix operator- (const Matrix &temp_m1, const Matrix &temp_m2) {
 	if (temp_m1.row == temp_m2.row && temp_m1.col == temp_m2.col)
 	{
 		temp_m3.resize(temp_m1.row, temp_m1.col);
-		for (size_t i = 0; i < temp_m1.row; ++i)
+		for (size_t i = 0; i != temp_m1.row; ++i)
 		{
-			for (size_t j = 0; j < temp_m1.col; ++j)
+			for (size_t j = 0; j != temp_m1.col; ++j)
 			{
 				temp_m3.matrix[i][j] = temp_m1.matrix[i][j] - temp_m2.matrix[i][j];
 			}
@@ -80,9 +81,9 @@ Matrix operator- (const Matrix &temp_m1, const Matrix &temp_m2) {
 Matrix operator-= (Matrix &temp_m1, const Matrix &temp_m2) {
 	if (temp_m1.row == temp_m2.row && temp_m1.col == temp_m2.col)
 	{
-		for (size_t i = 0; i < temp_m1.row; ++i)
+		for (size_t i = 0; i != temp_m1.row; ++i)
 		{
-			for (size_t j = 0; j < temp_m1.col; ++j)
+			for (size_t j = 0; j != temp_m1.col; ++j)
 			{
 				temp_m1.matrix[i][j] -= temp_m2.matrix[i][j];
 			}
@@ -101,12 +102,12 @@ Matrix operator* (const Matrix &temp_m1, const Matrix &temp_m2) {
 	if (temp_m1.col == temp_m2.row)                                                         // The number of columns in the first matrix M1 is equal to the number of rows in a matrix m2. 
 	{
 		temp_m3.resize(temp_m1.row, temp_m2.col);
-		for (size_t i = 0; i < temp_m1.row; ++i)
+		for (size_t i = 0; i != temp_m1.row; ++i)
 		{
-			for (size_t j = 0; j < temp_m2.col; ++j)
+			for (size_t j = 0; j != temp_m2.col; ++j)
 			{
-				for (size_t m = 0; m < temp_m1.col; ++m)
-					temp_m3.matrix[i][j] *= temp_m1.matrix[i][m] * temp_m2.matrix[m][j];
+				for (size_t m = 0; m != temp_m1.col; ++m)
+					temp_m3.matrix[i][j] += temp_m1.matrix[i][m] * temp_m2.matrix[m][j];
 			}
 		}
 	}
@@ -123,11 +124,11 @@ Matrix operator*= (Matrix &temp_m1, const Matrix &temp_m2) {
 	if (temp_m1.col == temp_m2.row)
 	{
 		temp_m3.resize(temp_m1.row, temp_m2.col);
-		for (size_t i = 0; i < temp_m1.row; ++i)
+		for (size_t i = 0; i != temp_m1.row; ++i)
 		{
-			for (size_t j = 0; j < temp_m2.col; ++j)
+			for (size_t j = 0; j != temp_m2.col; ++j)
 			{
-				for (size_t m = 0; m < temp_m1.col; ++m)
+				for (size_t m = 0; m != temp_m1.col; ++m)
 					temp_m3.matrix[i][j] *= temp_m1.matrix[i][m] * temp_m2.matrix[m][j];
 			}
 		}
@@ -145,8 +146,8 @@ bool operator== (const Matrix &temp_m1, const Matrix &temp_m2) {
 	if (temp_m1.row != temp_m2.row || temp_m1.col != temp_m2.col) {
 		return false;
 	}
-	for (size_t i = 0; i < temp_m1.row; ++i) {
-		for (size_t j = 0; j < temp_m2.col; ++j) {
+	for (size_t i = 0; i != temp_m1.row; ++i) {
+		for (size_t j = 0; j != temp_m2.col; ++j) {
 			if (temp_m1.matrix[i][j] != temp_m2.matrix[i][j]) {
 				return false;
 			}
@@ -161,8 +162,8 @@ bool operator!= (const Matrix &temp_m1, const Matrix &temp_m2) {
 
 std::ostream& operator<< (std::ostream &out, const Matrix &temp_m) {
 	out << " { " << endl;
-	for (size_t i = 0; i < temp_m.row; ++i) {
-		for (size_t j = 0; j < temp_m.col; ++j) {
+	for (size_t i = 0; i != temp_m.row; ++i) {
+		for (size_t j = 0; j != temp_m.col; ++j) {
 			if (j == (temp_m.col - 1)) {
 				out << temp_m.matrix[i][j] << endl;
 			}
@@ -211,16 +212,16 @@ void Matrix::add_row(size_t &temp_row, vF &temp_vcow) {                         
 	for (auto &i : temp_vvF) {
 		i.resize(col);
 	}
-	for (size_t i = 0; i < temp_row; ++i) {
-		for (size_t j = 0; j < col; ++j) {
+	for (size_t i = 0; i != temp_row; ++i) {
+		for (size_t j = 0; j != col; ++j) {
 			temp_vvF[i][j] = matrix[i][j];
 		}
 	}
-	for (size_t j = 0; j < col; ++j) {
+	for (size_t j = 0; j != col; ++j) {
 		temp_vvF[temp_row][j] = temp_vcow[j];
 	}
 	for (size_t i = temp_row + 1, ii = temp_row; ii < row; ++i, ++ii) {
-		for (size_t j = 0; j < col; ++j) {
+		for (size_t j = 0; j != col; ++j) {
 			temp_vvF[i][j] = matrix[ii][j];
 		}
 	}
@@ -229,14 +230,14 @@ void Matrix::add_row(size_t &temp_row, vF &temp_vcow) {                         
 }
 
 void Matrix::add_to_other_row(size_t &temp_row, Fraction &F) {                              // One row of the matrix is multiplied by K,it means matrix is multiplied by K.
-	for (size_t i = 0; i < col; ++i) {
+	for (size_t i = 0; i != col; ++i) {
 		matrix[temp_row][i] += (F*matrix[temp_row][i]);
 	}
 }
 
 void Matrix::add_to_other_row(size_t &temp_row1, size_t &temp_row2, Fraction &F) {         // One row of the matrix is multiplied by K and added to the other row.
 	if (temp_row1 != temp_row2) {
-		for (size_t i = 0; i < col; ++i) {
+		for (size_t i = 0; i != col; ++i) {
 			matrix[temp_row2][i] += (F*matrix[temp_row1][i]);
 		}
 	}
@@ -249,13 +250,13 @@ void Matrix::swap_row(size_t &temp_row1, size_t &temp_row2) {                   
 	if (temp_row1 != temp_row2) {
 		vF temp_vrow;
 		temp_vrow.resize(col);
-		for (size_t i = 0; i < col; ++i) {
+		for (size_t i = 0; i != col; ++i) {
 			temp_vrow[i] = matrix[temp_row1][i];
 		}
-		for (size_t i = 0; i < col; ++i) {
+		for (size_t i = 0; i != col; ++i) {
 			matrix[temp_row1][i] = matrix[temp_row2][i];
 		}
-		for (size_t i = 0; i < col; ++i) {
+		for (size_t i = 0; i != col; ++i) {
 			matrix[temp_row2][i] = temp_vrow[i];
 		}
 	}
@@ -270,13 +271,13 @@ void Matrix::del_row(size_t &temp_row) {                                        
 	for (auto &i : temp_vvF) {
 		i.resize(col);
 	}
-	for (size_t i = 0; i < temp_row; ++i) {
-		for (size_t j = 0; j < col; ++j) {
+	for (size_t i = 0; i != temp_row; ++i) {
+		for (size_t j = 0; j != col; ++j) {
 			temp_vvF[i][j] = matrix[i][j];
 		}
 	}
 	for (size_t i = temp_row + 1, ii = temp_row; i < row; ++i, ++ii) {
-		for (size_t j = 0; j < col; ++j) {
+		for (size_t j = 0; j != col; ++j) {
 			temp_vvF[ii][j] = matrix[i][j];
 		}
 	}
@@ -293,16 +294,16 @@ void Matrix::add_col(size_t &temp_col, vF &temp_vrow) {                         
 	for (auto &i : temp_vvF) {
 		i.resize(col + 1);
 	}
-	for (size_t i = 0; i < row; ++i) {
-		for (size_t j = 0; j < temp_col; ++j) {
+	for (size_t i = 0; i != row; ++i) {
+		for (size_t j = 0; j != temp_col; ++j) {
 			temp_vvF[i][j] = matrix[i][j];
 		}
 	}
-	for (size_t j = 0; j < row; ++j) {
+	for (size_t j = 0; j != row; ++j) {
 		temp_vvF[j][temp_col] = temp_vrow[j];
 	}
-	for (size_t i = 0; i < row; ++i) {
-		for (size_t j = temp_col + 1, jj = temp_col; jj < col; ++j, ++jj) {
+	for (size_t i = 0; i != row; ++i) {
+		for (size_t j = temp_col + 1, jj = temp_col; jj != col; ++j, ++jj) {
 			temp_vvF[i][j] = matrix[i][jj];
 		}
 	}
@@ -311,14 +312,14 @@ void Matrix::add_col(size_t &temp_col, vF &temp_vrow) {                         
 }
 
 void Matrix::add_to_other_col(size_t &temp_col, Fraction &F) {                           // One column of the matrix is multiplied by K,it means matrix is multiplied by K.
-	for (size_t i = 0; i < row; ++i) {
+	for (size_t i = 0; i != row; ++i) {
 		matrix[i][temp_col] += (F*matrix[i][temp_col]);
 	}
 }
 
 void Matrix::add_to_other_col(size_t &temp_col1, size_t &temp_col2, Fraction &F) {       // One column of the matrix is multiplied by K and added to the other column.
 	if (temp_col1 != temp_col2) {
-		for (size_t i = 0; i < row; ++i) {
+		for (size_t i = 0; i != row; ++i) {
 			matrix[i][temp_col2] += (F*matrix[i][temp_col1]);
 		}
 	}
@@ -331,13 +332,13 @@ void Matrix::swap_col(size_t &temp_col1, size_t &temp_col2) {                   
 	if (temp_col1 != temp_col2) {
 		vF temp_vcol;
 		temp_vcol.resize(row);
-		for (size_t i = 0; i < row; ++i) {
+		for (size_t i = 0; i != row; ++i) {
 			temp_vcol[i] = matrix[i][temp_col1];
 		}
-		for (size_t i = 0; i < row; ++i) {
+		for (size_t i = 0; i != row; ++i) {
 			matrix[i][temp_col1] = matrix[i][temp_col2];
 		}
-		for (size_t i = 0; i < row; ++i) {
+		for (size_t i = 0; i != row; ++i) {
 			matrix[i][temp_col2] = temp_vcol[i];
 		}
 	}
@@ -352,13 +353,13 @@ void Matrix::del_col(size_t &temp_col) {                                        
 	for (auto &i : temp_vvF) {
 		i.resize(col - 1);
 	}
-	for (size_t i = 0; i < row; ++i) {
-		for (size_t j = 0; j < temp_col; ++j) {
+	for (size_t i = 0; i != row; ++i) {
+		for (size_t j = 0; j != temp_col; ++j) {
 			temp_vvF[i][j] = matrix[i][j];
 		}
 	}
-	for (size_t i = 0; i < row; ++i) {
-		for (size_t j = temp_col + 1, jj = temp_col; j < col; ++j, ++jj) {
+	for (size_t i = 0; i != row; ++i) {
+		for (size_t j = temp_col + 1, jj = temp_col; j != col; ++j, ++jj) {
 			temp_vvF[i][jj] = matrix[i][j];
 		}
 	}
@@ -373,8 +374,8 @@ Matrix Matrix::trans() {                                                        
 	}
 	else {
 		temp_M.resize(col, row);
-		for (size_t i = 0; i < temp_M.row; ++i) {
-			for (size_t j = 0; j < temp_M.col; ++j) {
+		for (size_t i = 0; i != temp_M.row; ++i) {
+			for (size_t j = 0; j != temp_M.col; ++j) {
 				temp_M.matrix[i][j] = matrix[j][i];
 			}
 		}
@@ -433,9 +434,9 @@ pair<v_vF, v_vF> Matrix::LUdcmp() {                                             
 			i.resize(col);
 		}
 
-		for (i = 0; i < n; ++i) {
+		for (i = 0; i != n; ++i) {
 			big = 0;
-			for (j = 0; j < n; ++j) {
+			for (j = 0; j != n; ++j) {
 				if ((temp = Frac_abs(lu[i][j])) > big) {
 					big = temp;
 				}
@@ -445,10 +446,10 @@ pair<v_vF, v_vF> Matrix::LUdcmp() {                                             
 			}
 		}
 
-		for (k = 0; k < n; ++k) {
-			for (i = k + 1; i < n; ++i) {
+		for (k = 0; k != n; ++k) {
+			for (i = k + 1; i != n; ++i) {
 				lu[i][k] = lu[i][k] / lu[k][k];
-				for (j = k + 1; j < n; ++j) {
+				for (j = k + 1; j != n; ++j) {
 					lu[i][j] -= lu[i][k] * lu[k][j];
 				}
 			}
@@ -460,8 +461,8 @@ pair<v_vF, v_vF> Matrix::LUdcmp() {                                             
 		lu1.matrix = lu;
 		std::cout << lu1 << endl;
 		*/
-		for (i = 0; i < n; ++i) {
-			for (j = 0; j < n; ++j) {
+		for (i = 0; i != n; ++i) {
+			for (j = 0; j != n; ++j) {
 				if (j < i) {
 					u[i][j] = 0;
 					l[i][j] = lu[i][j];
@@ -497,7 +498,7 @@ Fraction Matrix::det() {                                                        
 	std::cout << a << endl;
 	std::cout << b << endl;
 	*/
-	for (i = 0; i < n; ++i) {
+	for (i = 0; i != n; ++i) {
 		d *= temp_pari.second[i][i];
 	}
 
