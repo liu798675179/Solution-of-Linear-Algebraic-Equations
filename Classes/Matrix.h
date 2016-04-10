@@ -5,9 +5,11 @@
 #include <vector>
 #include <iostream>
 #include <string>
+#include <utility>
 
 using std::vector;
 using std::string;
+using std::pair;
 
 typedef vector<Fraction>         vF;
 typedef vector<vector<Fraction>> v_vF;
@@ -73,6 +75,8 @@ public:
 	static Fraction Frac_abs(Fraction &);                                     // Absolute value of a fraction.
 	pair<v_vF, v_vF> LUdcmp();                                                // LU Decomposition.
 	Fraction det();                                                           // Determinant of  a matrix.
+	Matrix inverse();                                                         // Inverse of matrix.
+	vF solution(vF &);                                                        // Solution of linear algebraic equation.
 
 private:
 	size_t row = 0;                                                           // Size of rows.
