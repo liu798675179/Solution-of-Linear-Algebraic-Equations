@@ -486,7 +486,7 @@ pair<v_vF, v_vF> Matrix::LUdcmp() {                                             
 	}
 }
 
-Fraction Matrix::det() {                                                                // Determinant of  a matrix.
+Fraction Matrix::det() {                                                                 // Determinant of  a matrix.
 	Fraction d = 1;
 	size_t i, n(row);
 	pair<v_vF, v_vF> temp_pari = LUdcmp();
@@ -503,4 +503,72 @@ Fraction Matrix::det() {                                                        
 	}
 
 	return d;
+}
+
+Matrix Matrix::inverse() {                                                               // Inverse of matrix.
+	pair<v_vF, v_vF> temp_pair = LUdcmp();
+	Matrix temp_L, temp_U, temp_m, temp_L1, temp_U1;
+	temp_L.matrix = temp_pair.first;
+	temp_U.matrix = temp_pair.second;
+	size_t j, k, n(row);
+	int i;
+	Fraction s;
+	if (square()) {
+		temp_L1.resize(row, col);
+		temp_U1.resize(row, col);
+
+		for (j = 0; j != n; j++){
+			temp_L1.matrix[j][j] = 1;
+			for (i = j + 1; i != n; i++){
+				for (k = j; k != i; k++) {
+					temp_L1.matrix[i][j] -= temp_L.matrix[i][k] * temp_L1.matrix[k][j];
+				}
+			}
+		}
+		//std::cout << temp_L1 << endl;
+		for (j = 0; j != n; ++j) {
+			temp_U1.matrix[j][j] = 1 / temp_U.matrix[j][j];
+			for (i = j - 1; i != -1; i--) {
+				s = 0;
+				for (k = i + 1; k != j + 1; ++k) {
+					s += temp_U.matrix[i][k] * temp_U1.matrix[k][j];
+					temp_U1.matrix[i][j] = 0 - s / temp_U.matrix[i][i];
+				}
+			}
+		}
+		//std::cout << temp_U1 << endl;
+
+		temp_m = temp_U1 * temp_L1;
+
+		//std::cout << temp_m << endl;
+
+		return temp_m;
+	}
+	else {
+		throw runtime_error("The matrix is not square.");
+		return temp_m;
+	}
+}
+
+vF Matrix::solution(vF &temp_v) {                                                        // Solution of linear algebraic equation.
+	vF solution;
+	if (this->col == temp_v.size()) {
+		*this = this->inverse();
+		Matrix temp_m1;
+		temp_m1.resize(temp_v.size(), 1);
+		for (size_t i = 0; i != row; ++i) {
+			temp_m1.matrix[i][0] = temp_v[i];
+		}
+		temp_m1 = *this * temp_m1;
+		for (size_t i = 0; i != row; ++i) {
+			solution.push_back(temp_m1.matrix[i][0]);
+		}
+
+		return solution;
+	}
+	else {
+		throw runtime_error("temp_m's col and temp_v's row are not equal.");
+
+		return solution;
+	}
 }
