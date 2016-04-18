@@ -18,7 +18,7 @@ typedef vector<vector<Fraction>> v_vF;
 
 // Operator overloading.
 
-string Matrix::cout_out() const {                                                         // Output matrix.
+string Matrix::cout_out() const {                                                               // Output matrix.
 	ostringstream out;
 	out << row << " " << col << " ";
 	for (auto &i : matrix) {
@@ -29,7 +29,7 @@ string Matrix::cout_out() const {                                               
 	return out.str();
 }
 
-void Matrix::cin_in(string &temp_str) {                                                  // Input matrix.
+void Matrix::cin_in(string &temp_str) {                                                         // Input matrix.
 	istringstream in(temp_str, istringstream::in);
 	in >> row;
 	in >> col;
