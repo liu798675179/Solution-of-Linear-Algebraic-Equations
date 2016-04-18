@@ -18,7 +18,7 @@ typedef vector<vector<Fraction>> v_vF;
 
 // Operator overloading.
 
-string Matrix::cout_out() const {                                                               // Output matrix.
+string Matrix::cout_out() const {                                                           // Output matrix.
 	ostringstream out;
 	out << row << " " << col << " ";
 	for (auto &i : matrix) {
@@ -29,7 +29,7 @@ string Matrix::cout_out() const {                                               
 	return out.str();
 }
 
-void Matrix::cin_in(string &temp_str) {                                                         // Input matrix.
+void Matrix::cin_in(string &temp_str) {                                                     // Input matrix.
 	istringstream in(temp_str, istringstream::in);
 	in >> row;
 	in >> col;
@@ -276,7 +276,7 @@ void Matrix::add_to_other_row(size_t &temp_row1, size_t &temp_row2, Fraction &F)
 	}
 }
 
-void Matrix::swap_row(size_t &temp_row1, size_t &temp_row2) {                             // Swap two rows;
+void Matrix::swap_row(size_t &temp_row1, size_t &temp_row2) {                               // Swap two rows;
 	if (temp_row1 != temp_row2) {
 		vF temp_vrow;
 		temp_vrow.resize(col);
@@ -295,7 +295,7 @@ void Matrix::swap_row(size_t &temp_row1, size_t &temp_row2) {                   
 	}
 }
 
-void Matrix::del_row(size_t &temp_row) {                                                  // Minus one row.
+void Matrix::del_row(size_t &temp_row) {                                                    // Minus one row.
 	v_vF temp_vvF;
 	temp_vvF.resize(row - 1);
 	for (auto &i : temp_vvF) {
@@ -315,7 +315,7 @@ void Matrix::del_row(size_t &temp_row) {                                        
 	--row;
 }
 
-void Matrix::add_col(size_t &temp_col, vF &temp_vrow) {                                  // Add a column.
+void Matrix::add_col(size_t &temp_col, vF &temp_vrow) {                                     // Add a column.
 	if (temp_col >= (col + 1) || temp_col < 0) {
 		throw runtime_error("Column is out of bounds");
 	}
@@ -341,13 +341,13 @@ void Matrix::add_col(size_t &temp_col, vF &temp_vrow) {                         
 	++col;
 }
 
-void Matrix::add_to_other_col(size_t &temp_col, Fraction &F) {                           // One column of the matrix is multiplied by K,it means matrix is multiplied by K.
+void Matrix::add_to_other_col(size_t &temp_col, Fraction &F) {                              // One column of the matrix is multiplied by K,it means matrix is multiplied by K.
 	for (size_t i = 0; i != row; ++i) {
 		matrix[i][temp_col] += (F*matrix[i][temp_col]);
 	}
 }
 
-void Matrix::add_to_other_col(size_t &temp_col1, size_t &temp_col2, Fraction &F) {       // One column of the matrix is multiplied by K and added to the other column.
+void Matrix::add_to_other_col(size_t &temp_col1, size_t &temp_col2, Fraction &F) {          // One column of the matrix is multiplied by K and added to the other column.
 	if (temp_col1 != temp_col2) {
 		for (size_t i = 0; i != row; ++i) {
 			matrix[i][temp_col2] += (F*matrix[i][temp_col1]);
@@ -358,7 +358,7 @@ void Matrix::add_to_other_col(size_t &temp_col1, size_t &temp_col2, Fraction &F)
 	}
 }
 
-void Matrix::swap_col(size_t &temp_col1, size_t &temp_col2) {                            // Swap two columns;
+void Matrix::swap_col(size_t &temp_col1, size_t &temp_col2) {                               // Swap two columns;
 	if (temp_col1 != temp_col2) {
 		vF temp_vcol;
 		temp_vcol.resize(row);
@@ -377,7 +377,7 @@ void Matrix::swap_col(size_t &temp_col1, size_t &temp_col2) {                   
 	}
 }
 
-void Matrix::del_col(size_t &temp_col) {                                                 // Minus one column.
+void Matrix::del_col(size_t &temp_col) {                                                    // Minus one column.
 	v_vF temp_vvF;
 	temp_vvF.resize(row);
 	for (auto &i : temp_vvF) {
@@ -397,7 +397,7 @@ void Matrix::del_col(size_t &temp_col) {                                        
 	--col;
 }
 
-Matrix Matrix::trans() {                                                                 // Transpose a matrix.
+Matrix Matrix::trans() {                                                                    // Transpose a matrix.
 	Matrix temp_M;
 	if (matrix.empty()) {
 		throw runtime_error("The matrix is empty.");
@@ -414,11 +414,11 @@ Matrix Matrix::trans() {                                                        
 	return temp_M;
 }
 
-bool Matrix::square() const {                                                            // Check whether the square.
+bool Matrix::square() const {                                                               // Check whether the square.
 	return (!matrix.empty() && row == col);
 }
 
-pair<v_vF, v_vF> Matrix::LUdcmp() {                                                      // LU Decomposition.
+pair<v_vF, v_vF> Matrix::LUdcmp() {                                                         // LU Decomposition.
 	v_vF lu(matrix), u, l;
 	if (square()) {
 		size_t n(row);
@@ -486,7 +486,7 @@ pair<v_vF, v_vF> Matrix::LUdcmp() {                                             
 	}
 }
 
-Fraction Matrix::det() {                                                                 // Determinant of  a matrix.
+Fraction Matrix::det() {                                                                    // Determinant of  a matrix.
 	Fraction d = 1;
 	size_t i, n(row);
 	pair<v_vF, v_vF> temp_pari = LUdcmp();
@@ -505,7 +505,7 @@ Fraction Matrix::det() {                                                        
 	return d;
 }
 
-Matrix Matrix::inverse() {                                                               // Inverse of matrix.
+Matrix Matrix::inverse() {                                                                  // Inverse of matrix.
 	pair<v_vF, v_vF> temp_pair = LUdcmp();
 	Matrix temp_L, temp_U, temp_m, temp_L1, temp_U1;
 	temp_L.matrix = temp_pair.first;
@@ -547,5 +547,28 @@ Matrix Matrix::inverse() {                                                      
 	else {
 		throw runtime_error("The matrix is not square.");
 		return temp_m;
+	}
+}
+
+vF Matrix::solution(vF &temp_v) {                                                           // Solution of linear algebraic equation.
+	vF solution;
+	if (this->col == temp_v.size()) {
+		*this = this->inverse();
+		Matrix temp_m1;
+		temp_m1.resize(temp_v.size(), 1);
+		for (size_t i = 0; i != row; ++i) {
+			temp_m1.matrix[i][0] = temp_v[i];
+		}
+		temp_m1 = *this * temp_m1;
+		for (size_t i = 0; i != row; ++i) {
+			solution.push_back(temp_m1.matrix[i][0]);
+		}
+
+		return solution;
+	}
+	else {
+		throw runtime_error("temp_m's col and temp_v's row are not equal.");
+
+		return solution;
 	}
 }
