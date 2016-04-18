@@ -72,7 +72,13 @@ std::ostream& operator<< (std::ostream &os, const Fraction &frac) {
 }
 
 std::istream& operator>> (std::istream &is, Fraction &frac) {
-	is >> frac.numerator >> frac.denominator;
+	is >> frac.numerator;
+	if (is.get() == '\n') {
+		return is;
+	}
+	else {
+		is >> frac.denominator;
+	}
 	return is;
 }
 
