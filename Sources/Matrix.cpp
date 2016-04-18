@@ -1,8 +1,8 @@
 #include "Matrix.h"
 #include "Fraction.h"
+#include <sstream>
 #include <vector>
 #include <string>
-#include <sstream>
 #include <stdexcept>
 #include <utility>
 
@@ -17,6 +17,33 @@ typedef vector<Fraction>         vF;
 typedef vector<vector<Fraction>> v_vF;
 
 // Operator overloading.
+
+string Matrix::cout_out() const {                                                         // Output matrix.
+	ostringstream out;
+	out << row << " " << col << " ";
+	for (auto &i : matrix) {
+		for (auto &j : i) {
+			out << j << " ";
+		}
+	}
+	return out.str();
+}
+
+void Matrix::cin_in(string &temp_str) {                                                  // Input matrix.
+	istringstream in(temp_str, istringstream::in);
+	in >> row;
+	in >> col;
+	matrix.resize(row);
+	for (auto &i : matrix) {
+		i.resize(col);
+	}
+	for (auto &i : matrix) {
+		for (auto &j : i) {
+			in >> j;
+		}
+	}
+}
+
 Matrix operator+ (const Matrix &temp_m1, const Matrix &temp_m2) {
 	Matrix temp_m3;
 	if (temp_m1.row == temp_m2.row && temp_m1.col == temp_m2.col)                           // First judge M1 and M2 matrix are not the same type of matrix.
@@ -166,12 +193,15 @@ std::ostream& operator<< (std::ostream &out, const Matrix &temp_m) {
 		for (size_t j = 0; j != temp_m.col; ++j) {
 			if (j == (temp_m.col - 1)) {
 				out << temp_m.matrix[i][j] << endl;
+				if (i != temp_m.row - 1) {
+					out << endl;
+				}
 			}
 			else if (j == 0) {
-				out << "   " << temp_m.matrix[i][j] << " , ";
+				out << "   " << temp_m.matrix[i][j] << "   ";
 			}
 			else {
-				out << temp_m.matrix[i][j] << " , ";
+				out << temp_m.matrix[i][j] << "   ";
 			}
 		}
 	}
@@ -384,32 +414,6 @@ Matrix Matrix::trans() {                                                        
 	return temp_M;
 }
 
-string Matrix::cout_out() const{                                                         // Output matrix.
-	ostringstream out;
-	out << row << " " << col << " ";
-	for (auto &i : matrix) {
-		for (auto &j : i) {
-			out << j << " ";
-		}
-	}
-	return out.str();
-}
-
-void Matrix::cin_in(string &temp_str) {                                                  // Input matrix.
-	istringstream in(temp_str, istringstream::in);
-	in >> row;
-	in >> col;
-	matrix.resize(row);
-	for (auto &i : matrix) {
-		i.resize(col);
-	}
-	for (auto &i : matrix) {
-		for (auto &j : i) {
-			in >> j;
-		}
-	}
-}
-
 bool Matrix::square() const {                                                            // Check whether the square.
 	return (!matrix.empty() && row == col);
 }
@@ -546,25 +550,4 @@ Matrix Matrix::inverse() {                                                      
 	}
 }
 
-vF Matrix::solution(vF &temp_v) {                                                        // Solution of linear algebraic equation.
-	vF solution;
-	if (this->col == temp_v.size()) {
-		*this = this->inverse();
-		Matrix temp_m1;
-		temp_m1.resize(temp_v.size(), 1);
-		for (size_t i = 0; i != row; ++i) {
-			temp_m1.matrix[i][0] = temp_v[i];
-		}
-		temp_m1 = *this * temp_m1;
-		for (size_t i = 0; i != row; ++i) {
-			solution.push_back(temp_m1.matrix[i][0]);
-		}
-
-		return solution;
-	}
-	else {
-		throw runtime_error("temp_m's col and temp_v's row are not equal.");
-
-		return solution;
-	}
-}
+vF Mat
