@@ -2,7 +2,7 @@
 #include <cmath>
 #include <iostream>
 
-long long Fraction::gcd(long long numerator, long long denominator) {                           // method of successive division
+long long Fraction::gcd(long long numerator, long long denominator) {  // method of successive division
 	long long temp;
 	if (numerator < denominator) {
 		temp = denominator;
@@ -28,7 +28,7 @@ void Fraction::rof() {
 	}
 }
 
- // Operator overloading.
+// Operator overloading.
 Fraction operator + (const Fraction &frac1, const Fraction &frac2) {
 	return Fraction(frac1.numerator * frac2.denominator + frac2.numerator * frac1.denominator, frac2.denominator * frac1.denominator);
 }
@@ -70,10 +70,12 @@ std::ostream& operator<< (std::ostream &os, const Fraction &frac) {
 	os << frac_temp.numerator << "/" << frac_temp.denominator;
 	return os;
 }
+
 std::istream& operator>> (std::istream &is, Fraction &frac) {
 	is >> frac.numerator >> frac.denominator;
 	return is;
 }
+
 bool operator == (const Fraction &frac1, const Fraction &frac2) {
 	return (frac1.numerator * frac2.denominator) == (frac2.numerator * frac1.denominator);
 }
@@ -96,4 +98,8 @@ bool operator > (const Fraction &frac1, const Fraction &frac2) {
 
 bool operator >= (const Fraction &frac1, const Fraction &frac2) {
 	return !(frac1 < frac2);
+}
+
+Fraction Fraction::Frac_abs(Fraction &temp_frac) {                                       // Absolute value of a fraction.
+	return (temp_frac >= 0) ? temp_frac : (0 - temp_frac);
 }
