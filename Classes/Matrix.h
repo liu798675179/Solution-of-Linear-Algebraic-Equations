@@ -1,6 +1,3 @@
-#ifndef MATRIX_H
-#define MATRIX_H
-
 #include "Fraction.h"
 #include <vector>
 #include <iostream>
@@ -72,7 +69,6 @@ public:
 	string cout_out() const;                                                  // Output matrix.
 	void cin_in(string &);                                                    // Input matrix.
 	bool square() const;                                                      // Check whether the square. 
-	static Fraction Frac_abs(Fraction &);                                     // Absolute value of a fraction.
 	pair<v_vF, v_vF> LUdcmp();                                                // LU Decomposition.
 	Fraction det();                                                           // Determinant of  a matrix.
 	Matrix inverse();                                                         // Inverse of matrix.
