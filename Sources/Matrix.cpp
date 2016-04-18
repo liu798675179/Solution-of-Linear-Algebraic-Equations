@@ -549,5 +549,3 @@ Matrix Matrix::inverse() {                                                      
 		return temp_m;
 	}
 }
-
-vF Mat
