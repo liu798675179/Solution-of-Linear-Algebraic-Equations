@@ -1,3 +1,6 @@
+#ifndef MATRIX_H
+#define MATRIX_H
+
 #include "Fraction.h"
 #include <vector>
 #include <iostream>
@@ -54,6 +57,8 @@ public:
 	~Matrix(){ }                                                              // Destructor.
 
 // Nember function.
+	string cout_out() const;                                                  // Output matrix.
+	void cin_in(string &);                                                    // Input matrix.
 	void resize(const size_t &, const size_t &);                              // Reset matrix size. 
 	void add_row(size_t &, vF &);                                             // Add a line.
 	void add_to_other_row(size_t &, Fraction &);                              // One row of the matrix is multiplied by K,it means matrix is multiplied by K.
@@ -66,8 +71,6 @@ public:
 	void del_col(size_t &);                                                   // Minus one column.
 	void swap_col(size_t &, size_t &);                                        // Swap two cols;
 	Matrix trans();                                                           // Transpose a matrix.
-	string cout_out() const;                                                  // Output matrix.
-	void cin_in(string &);                                                    // Input matrix.
 	bool square() const;                                                      // Check whether the square. 
 	pair<v_vF, v_vF> LUdcmp();                                                // LU Decomposition.
 	Fraction det();                                                           // Determinant of  a matrix.
