@@ -395,7 +395,7 @@ string Matrix::cout_out() const{                                                
 	return out.str();
 }
 
-void Matrix::cin_in(string &temp_str) {                                                 // Input matrix.
+void Matrix::cin_in(string &temp_str) {                                                  // Input matrix.
 	istringstream in(temp_str, istringstream::in);
 	in >> row;
 	in >> col;
@@ -410,15 +410,11 @@ void Matrix::cin_in(string &temp_str) {                                         
 	}
 }
 
-bool Matrix::square() const {                                                           // Check whether the square.
+bool Matrix::square() const {                                                            // Check whether the square.
 	return (!matrix.empty() && row == col);
 }
 
-Fraction Matrix::Frac_abs(Fraction &temp_frac) {                                        // Absolute value of a fraction.
-	return (temp_frac >= 0) ? temp_frac : (0 - temp_frac);
-}
-
-pair<v_vF, v_vF> Matrix::LUdcmp() {                                                     // LU Decomposition.
+pair<v_vF, v_vF> Matrix::LUdcmp() {                                                      // LU Decomposition.
 	v_vF lu(matrix), u, l;
 	if (square()) {
 		size_t n(row);
@@ -437,7 +433,7 @@ pair<v_vF, v_vF> Matrix::LUdcmp() {                                             
 		for (i = 0; i != n; ++i) {
 			big = 0;
 			for (j = 0; j != n; ++j) {
-				if ((temp = Frac_abs(lu[i][j])) > big) {
+				if ((temp = Fraction::Frac_abs(lu[i][j])) > big) {
 					big = temp;
 				}
 			}
@@ -492,7 +488,7 @@ Fraction Matrix::det() {                                                        
 	pair<v_vF, v_vF> temp_pari = LUdcmp();
 	/*
 	Matrix a, b;
-	a.matrix = temp_pari.second, b.matrix = temp_pari.first;
+	a.matrix = temp_pari.first, b.matrix = temp_pari.second;
 	a.row = row, b.row = row;
 	a.col = col, b.col = col;
 	std::cout << a << endl;
