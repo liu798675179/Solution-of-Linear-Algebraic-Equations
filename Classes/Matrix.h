@@ -38,7 +38,7 @@ public:
 		}
 	}
 
-	Matrix(size_t temp_row, size_t temp_col, v_vF temp_m) :row(temp_row), col(temp_col), matrix(temp_m) {}
+	Matrix(size_t temp_row, size_t temp_col, v_vF temp_m) :row(temp_row), col(temp_col), matrix(temp_m) { }
 
 	Matrix(const Matrix &rhs) {                                               // Copy constructor.
 		this->row = rhs.row;
