@@ -67,7 +67,6 @@ Fraction operator /= (Fraction &frac1, const Fraction &frac2) {
 
 std::ostream& operator<< (std::ostream &os, const Fraction &frac) {
 	Fraction frac_temp(frac.numerator, frac.denominator);
-	//os << frac_temp.numerator << "/" << frac_temp.denominator;
 	os << frac_temp.numerator;						// When denominator is 1, do not output it.
 	if (frac_temp.denominator != 1)
 		os << "/" << frac_temp.denominator;
@@ -76,7 +75,6 @@ std::ostream& operator<< (std::ostream &os, const Fraction &frac) {
 
 std::istream& operator>> (std::istream &is, Fraction &frac) {
 	is >> frac.numerator;
-	//if (is.get() == '\n') {
 	if (is.get() != '/') {							// read denominator if and only if next char is '/'
 		return is;
 	}
