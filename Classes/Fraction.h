@@ -25,7 +25,8 @@ public:
 	friend bool operator>= (const Fraction&, const Fraction&);
 
 	static Fraction Frac_abs(Fraction &);                                                    // Absolute value of a fraction.
-
+        void cin_num(long long);
+	void cin_den(long long);
 public:
 	Fraction() = default;                                                                    // constructor function: numerator = 0, denominator = 1
 	Fraction(long long temp_a) : numerator(temp_a) { }                                       // constructor function: numerator = temp_a, denominator = 1.
