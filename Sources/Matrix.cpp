@@ -18,6 +18,9 @@ typedef vector<vector<Fraction>> v_vF;
 
 // Operator overloading.
 
+/* Modified by hopeful in 2016.04.20 */
+
+/*
 string Matrix::cout_out() const {                                                           // Output matrix.
 	ostringstream out;
 	out << row << " " << col << " ";
@@ -43,7 +46,31 @@ void Matrix::cin_in(string &temp_str) {                                         
 		}
 	}
 }
+*/
 
+string Matrix::cout_out() const {
+
+}
+
+void Matrix::cin_in(string &temp_str) {
+	int i = 0,j = 0;
+	int num;
+	Fraction fra;
+	for(char c : temp_str) {
+		if (c == ']') {
+			fra = new Fraction(Fraction);
+			matrix[i][j] = fra;
+		}else if (c == '/')) {
+			fra = new Fraction(num);
+			num = 0;
+		}else if(isdigit(c)) {
+			num *= 10;
+			num += c - '0';
+		}
+	}
+}
+
+/* Modified finised */
 Matrix operator+ (const Matrix &temp_m1, const Matrix &temp_m2) {
 	Matrix temp_m3;
 	if (temp_m1.row == temp_m2.row && temp_m1.col == temp_m2.col)                           // First judge M1 and M2 matrix are not the same type of matrix.
