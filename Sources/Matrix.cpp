@@ -50,13 +50,13 @@ void Matrix::cin_in(string &temp_str) {                                         
 
 string Matrix::cout_out() const {
 	ostringstream out;
-	out << this;
+	out << (*this);
 	return out.str();
 }
 
 void Matrix::cin_in(string &temp_str) {
 	istringstream in(temp_str, istringstream::in);
-	in >> this;
+	in >> (*this);
 }
 /* Modified finised */
 
