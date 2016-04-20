@@ -112,3 +112,11 @@ bool operator >= (const Fraction &frac1, const Fraction &frac2) {
 Fraction Fraction::Frac_abs(Fraction &temp_frac) {                                       // Absolute value of a fraction.
 	return (temp_frac >= 0) ? temp_frac : (0 - temp_frac);
 }
+
+void Fraction::cin_num(long long temp_a) {
+	this->numerator = temp_a;
+}
+
+void Fraction::cin_den(long long temp_a) {
+	this->denominator = temp_a;
+}
