@@ -1,8 +1,9 @@
 #include "Fraction.h"
 #include <cmath>
 #include <iostream>
+#include <sstream>
 
-long long Fraction::gcd(long long numerator, long long denominator) {  // method of successive division
+long long Fraction::gcd(long long numerator, long long denominator) {                  // Greatest common factor
 	long long temp;
 	if (numerator < denominator) {
 		temp = denominator;
@@ -73,7 +74,7 @@ std::ostream& operator<< (std::ostream &os, const Fraction &frac) {
 	return os;
 }
 
-std::istream& operator>> (std::istream &is, Fraction &frac) {
+std::istream& operator >> (std::istream &is, Fraction &frac) {
 	is >> frac.numerator;
 	if (is.get() != '/') {							// read denominator if and only if next char is '/'
 		return is;
@@ -81,7 +82,7 @@ std::istream& operator>> (std::istream &is, Fraction &frac) {
 	else {
 		is >> frac.denominator;
 	}
-	is.get();								// use get() to clear the break
+	is.get();								        // use get() to clear the break
 	return is;
 }
 
@@ -113,10 +114,17 @@ Fraction Fraction::Frac_abs(Fraction &temp_frac) {                              
 	return (temp_frac >= 0) ? temp_frac : (0 - temp_frac);
 }
 
-void Fraction::cin_num(long long temp_a) {
+void Fraction::cin_num(long long temp_a) {                                               // Input a Fraction's numerator.
 	this->numerator = temp_a;
 }
 
-void Fraction::cin_den(long long temp_a) {
+void Fraction::cin_den(long long temp_a) {                                               // Input a Fraction's denminator.
 	this->denominator = temp_a;
+}
+
+string Fraction::cout_temp_addition_for_transmission() const {                           // Temporary output.
+	std::ostringstream out;
+	out << *this;
+
+	return out.str();
 }
