@@ -16,49 +16,49 @@ using std::istringstream;
 typedef vector<Fraction>         vF;
 typedef vector<vector<Fraction>> v_vF;
 
-// Operator overloading.
-
-/* Modified by hopeful in 2016.04.20 */
-
-/*
-string Matrix::cout_out() const {                                                           // Output matrix.
-	ostringstream out;
-	out << row << " " << col << " ";
-	for (auto &i : matrix) {
-		for (auto &j : i) {
-			out << j << " ";
-		}
-	}
-	return out.str();
+v_vF Matrix::matrix_out() {                                                                // Show matrix.
+	return matrix;
 }
 
-void Matrix::cin_in(string &temp_str) {                                                     // Input matrix.
-	istringstream in(temp_str, istringstream::in);
-	in >> row;
-	in >> col;
-	matrix.resize(row);
-	for (auto &i : matrix) {
-		i.resize(col);
-	}
-	for (auto &i : matrix) {
-		for (auto &j : i) {
-			in >> j;
-		}
-	}
+void Matrix::matrix_getin(v_vF &temp_vvf) {                                                // Using v_vF to create a Matrix.
+	this->row = temp_vvf.size();
+	this->col = temp_vvf[0].size();
+	this->matrix = temp_vvf;
 }
-*/
 
-string Matrix::cout_out() const {
+string Matrix::cout_out() const {                                                          // Output Matrix.
 	ostringstream out;
 	out << (*this);
 	return out.str();
 }
 
-void Matrix::cin_in(string &temp_str) {
+string Matrix::cout_temp_addition_for_transmission() const {                               // Temporary output.
+	ostringstream out;
+	out << "(";
+	out << this->row;
+	out << ",";
+	out << this->col;
+	out << ")";
+	out << "[";
+	for (auto &temp : this->matrix) {
+		out << "[";
+		for (auto beg = temp.begin(); beg != temp.end(); ++beg) {
+			out << *beg;
+			if (beg + 1 != temp.end())
+				out << ",";
+		}
+		out << "]";
+	}
+	out << "]";
+	out << "|";
+
+	return out.str();
+}
+
+void Matrix::cin_in(string &temp_str) {                                                     // Input Matrix.
 	istringstream in(temp_str, istringstream::in);
 	in >> (*this);
 }
-/* Modified finised */
 
 Matrix operator+ (const Matrix &temp_m1, const Matrix &temp_m2) {
 	Matrix temp_m3;
