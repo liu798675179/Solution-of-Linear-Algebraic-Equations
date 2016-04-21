@@ -60,10 +60,11 @@ public:
 	}
 
 	~Matrix(){ }                                                              // Destructor.
-
-// Nember function.
-	string cout_out() const;                                                  // Output matrix.
-	void cin_in(string &);                                                    // Input matrix.
+	v_vF matrix_out();                                                        // Show matrix.
+	void matrix_getin(v_vF &);                                                // Using v_vF to create a Matrix. 
+	string cout_out() const;                                                  // Output Matrix.
+	string cout_temp_addition_for_transmission() const;                       // Temporary output.
+	void cin_in(string &);                                                    // Input Matrix.
 	void resize(const size_t &, const size_t &);                              // Reset matrix size. 
 	void add_row(size_t &, vF &);                                             // Add a line.
 	void add_to_other_row(size_t &, Fraction &);                              // One row of the matrix is multiplied by K,it means matrix is multiplied by K.
