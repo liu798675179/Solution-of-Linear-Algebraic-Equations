@@ -59,7 +59,7 @@ public:
 		}
 	}
 
-	~Matrix(){ }                                                              // Destructor.
+	~Matrix() = default                                                       // Destructor.
 	v_vF matrix_out();                                                        // Show matrix.
 	void matrix_getin(v_vF &);                                                // Using v_vF to create a Matrix. 
 	string cout_out() const;                                                  // Output Matrix.
