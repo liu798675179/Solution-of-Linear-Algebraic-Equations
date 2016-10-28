@@ -36,7 +36,7 @@ public:
 	Fraction(long long temp_a, long long temp_b) : numerator(temp_a), denominator(temp_b) {  // constructor function: numerator = temp_a, denominator = 1 and reduction of a fraction.
 		rof();
 	}
-	~Fraction() { };                                                                         // Destructor
+	~Fraction() = default;                                                                   // Destructor
 
 private:
 	long long numerator = 0;
