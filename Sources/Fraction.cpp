@@ -1,9 +1,9 @@
 #include "Fraction.h"
 #include <cmath>
-#include <iostream>
 #include <sstream>
 
-long long Fraction::gcd(long long numerator, long long denominator) {                  // Greatest common factor
+// Greatest common factor.
+long long Fraction::gcd(long long numerator, long long denominator) {
 	long long temp;
 	if (numerator < denominator) {
 		temp = denominator;
@@ -20,7 +20,8 @@ long long Fraction::gcd(long long numerator, long long denominator) {           
 
 void Fraction::rof() {
 	if (numerator) {
-		long long g = gcd(abs(numerator), denominator);                                 // The g is greatest common divisor of two numbers.
+		// The g is greatest common divisor of two numbers.
+		auto g = gcd(abs(numerator), denominator);
 		numerator /= g;
 		denominator /= g;
 	}
@@ -68,7 +69,8 @@ Fraction operator /= (Fraction &frac1, const Fraction &frac2) {
 
 std::ostream& operator<< (std::ostream &os, const Fraction &frac) {
 	Fraction frac_temp(frac.numerator, frac.denominator);
-	os << frac_temp.numerator;						// When denominator is 1, do not output it.
+	// When denominator is 1, do not output it.
+	os << frac_temp.numerator;
 	if (frac_temp.denominator != 1)
 		os << "/" << frac_temp.denominator;
 	return os;
@@ -76,13 +78,13 @@ std::ostream& operator<< (std::ostream &os, const Fraction &frac) {
 
 std::istream& operator >> (std::istream &is, Fraction &frac) {
 	is >> frac.numerator;
-	if (is.get() != '/') {							// read denominator if and only if next char is '/'
+	// read denominator if and only if next char is '/'.
+	if (is.get() != '/') {
 		return is;
 	}
-	else {
-		is >> frac.denominator;
-	}
-	is.get();								        // use get() to clear the break
+	is >> frac.denominator;
+	// use get() to clear the break.
+	is.get();
 	return is;
 }
 
@@ -110,21 +112,25 @@ bool operator >= (const Fraction &frac1, const Fraction &frac2) {
 	return !(frac1 < frac2);
 }
 
-Fraction Fraction::Frac_abs(Fraction &temp_frac) {                                       // Absolute value of a fraction.
+// Absolute value of a fraction.
+Fraction Fraction::Frac_abs(Fraction &temp_frac) {
 	return (temp_frac >= 0) ? temp_frac : (0 - temp_frac);
 }
 
-void Fraction::cin_num(long long temp_a) {                                               // Input a Fraction's numerator.
+// Input a Fraction's numerator.
+void Fraction::cin_num(long long temp_a) {
 	this->numerator = temp_a;
 }
 
-void Fraction::cin_den(long long temp_a) {                                               // Input a Fraction's denminator.
+// Input a Fraction's denminator.
+void Fraction::cin_den(long long temp_a) {
 	this->denominator = temp_a;
 }
 
-string Fraction::cout_temp_addition_for_transmission() const {                           // Temporary output.
+// Temporary output.
+string Fraction::cout_temp_addition_for_transmission() const {
 	std::ostringstream out;
 	out << *this;
 
 	return out.str();
-}
+}          
