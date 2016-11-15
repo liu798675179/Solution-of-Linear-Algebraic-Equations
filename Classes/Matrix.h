@@ -1,9 +1,9 @@
-#ifndef MATRIX_H
-#define MATRIX_H
+#ifndef _MATRIX_H_
+#define _MATRIX_H_
 
 #include "Fraction.h"
+
 #include <vector>
-#include <iostream>
 #include <string>
 #include <utility>
 
@@ -29,9 +29,10 @@ public:
 	friend std::istream& operator>> (std::istream&, Matrix&);
 
 public:
-// Constructor.
 	Matrix() = default;
-	Matrix(size_t temp_row, size_t temp_col) :row(temp_row), col(temp_col) {  // Determine the size of the matrix,default value is zero.
+
+	// Determine the size of the matrix,default value is zero.
+	Matrix(size_t temp_row, size_t temp_col) :row(temp_row), col(temp_col) {
 		matrix.resize(row);
 		for(auto &i : matrix) {
 			i.resize(col);
@@ -40,13 +41,15 @@ public:
 
 	Matrix(size_t temp_row, size_t temp_col, v_vF temp_m) :row(temp_row), col(temp_col), matrix(temp_m) { }
 
-	Matrix(const Matrix &rhs) {                                               // Copy constructor.
+	// Copy constructor.
+	Matrix(const Matrix &rhs) {
 		this->row = rhs.row;
 		this->col = rhs.col;
 		this->matrix = rhs.matrix;
 	}
 
-	Matrix & operator=(const Matrix &rhs) {                                   // Copy-assignment operator.
+	// Copy-assignment operator.
+	Matrix & operator=(const Matrix &rhs) {
 		if (this != &rhs) {
 			this->row = rhs.row;
 			this->col = rhs.col;
@@ -59,33 +62,55 @@ public:
 		}
 	}
 
-	~Matrix() = default;                                                      // Destructor.
-	v_vF matrix_out();                                                        // Show matrix.
-	void matrix_getin(v_vF &);                                                // Using v_vF to create a Matrix. 
-	string cout_out() const;                                                  // Output Matrix.
-	string cout_temp_addition_for_transmission() const;                       // Temporary output.
-	void cin_in(string &);                                                    // Input Matrix.
-	void resize(const size_t &, const size_t &);                              // Reset matrix size. 
-	void add_row(size_t &, vF &);                                             // Add a line.
-	void add_to_other_row(size_t &, Fraction &);                              // One row of the matrix is multiplied by K,it means matrix is multiplied by K.
-	void add_to_other_row(size_t &, size_t &, Fraction &);                    // One row of the matrix is multiplied by K and added to the other line.
-	void swap_row(size_t &, size_t &);                                        // Swap two roes;
-	void del_row(size_t &);                                                   // Minus one line.
-	void add_col(size_t &, vF &);                                             // Add a column.
-	void add_to_other_col(size_t &, Fraction &);                              // One column of the matrix is multiplied by K,it means matrix is multiplied by K.
-	void add_to_other_col(size_t &, size_t &, Fraction &);                    // One column of the matrix is multiplied by K and added to the other column.
-	void del_col(size_t &);                                                   // Minus one column.
-	void swap_col(size_t &, size_t &);                                        // Swap two cols;
-	Matrix trans();                                                           // Transpose a matrix.
-	bool square() const;                                                      // Check whether the square. 
-	pair<v_vF, v_vF> LUdcmp();                                                // LU Decomposition.
-	Fraction det();                                                           // Determinant of  a matrix.
-	Matrix inverse();                                                         // Inverse of matrix.
-	vF solution(vF &);                                                        // Solution of linear algebraic equation.
+	~Matrix() = default;
+	// Show matrix.
+	v_vF matrix_out() const;
+	// Using v_vF to create a Matrix. 
+	void matrix_getin(v_vF &);
+	// Output Matrix.
+	string cout_out() const;
+	// Temporary output.
+	string cout_temp_addition_for_transmission() const;
+	// Input Matrix.
+	void cin_in(string &);
+	// Reset matrix size. 
+	void resize(const size_t &, const size_t &);
+	// Add a line.
+	void add_row(const size_t &, const vF &);
+	// One row of the matrix is multiplied by K,it means matrix is multiplied by K.
+	void add_to_other_row(const size_t &, const Fraction &);
+	// One row of the matrix is multiplied by K and added to the other line.
+	void add_to_other_row(const size_t &, const size_t &, const Fraction &);
+	// Swap two roes.
+	void swap_row(const size_t &, const size_t &);
+	// Minus one line.
+	void del_row(const size_t &);
+	// Add a column.
+	void add_col(const size_t &, const vF &);
+	// One column of the matrix is multiplied by K,it means matrix is multiplied by K.
+	void add_to_other_col(const size_t &, const Fraction &);
+	// One column of the matrix is multiplied by K and added to the other column.
+	void add_to_other_col(const size_t &, const size_t &, const Fraction &);
+	// Minus one column.
+	void del_col(const size_t &);
+	// Swap two cols.
+	void swap_col(const size_t &, const size_t &);
+	// Transpose a matrix.
+	Matrix trans();
+	// Check whether the square. 
+	bool square() const;
+	// LU Decomposition.
+	pair<v_vF, v_vF> LUdcmp() const;
+	// Determinant of  a matrix.
+	Fraction det() const;
+	// Inverse of matrix.
+	Matrix inverse() const;
+	// Solution of linear algebraic equation.
+	vF solution(vF &);
 
 private:
-	size_t row = 0;                                                           // Size of rows.
-	size_t col = 0;                                                           // Size of columns.
+	size_t row = 0;
+	size_t col = 0;
 	v_vF   matrix;
 };
 
