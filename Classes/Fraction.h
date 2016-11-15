@@ -1,5 +1,5 @@
-#ifndef FRACTION_H
-#define FRACTION_H
+#ifndef _FRACTION_H_
+#define _FRACTION_H_
 
 #include <iostream>
 
