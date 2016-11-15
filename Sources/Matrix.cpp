@@ -1,14 +1,17 @@
 #include "Matrix.h"
 #include "Fraction.h"
-#include <sstream>
+
 #include <vector>
 #include <string>
-#include <stdexcept>
+#include <sstream>
 #include <utility>
+#include <iostream>
+#include <stdexcept>
 
+using std::cout;
+using std::endl;
 using std::vector;
 using std::string;
-using std::endl;
 using std::runtime_error;
 using std::ostringstream;
 using std::istringstream;
@@ -16,31 +19,35 @@ using std::istringstream;
 typedef vector<Fraction>         vF;
 typedef vector<vector<Fraction>> v_vF;
 
-v_vF Matrix::matrix_out() {                                                                // Show matrix.
+// Show matrix.
+v_vF Matrix::matrix_out() const {
 	return matrix;
 }
 
-void Matrix::matrix_getin(v_vF &temp_vvf) {                                                // Using v_vF to create a Matrix.
-	this->row = temp_vvf.size();
-	this->col = temp_vvf[0].size();
-	this->matrix = temp_vvf;
+// Using v_vF to create a Matrix.
+void Matrix::matrix_getin(v_vF &temp_vvf) {
+	row = temp_vvf.size();
+	col = temp_vvf[0].size();
+	matrix = temp_vvf;
 }
 
-string Matrix::cout_out() const {                                                          // Output Matrix.
+// Output Matrix.
+string Matrix::cout_out() const {
 	ostringstream out;
 	out << (*this);
 	return out.str();
 }
 
-string Matrix::cout_temp_addition_for_transmission() const {                               // Temporary output.
+// Temporary output.
+string Matrix::cout_temp_addition_for_transmission() const {
 	ostringstream out;
 	out << "(";
-	out << this->row;
+	out << row;
 	out << ",";
-	out << this->col;
+	out << col;
 	out << ")";
 	out << "[";
-	for (auto &temp : this->matrix) {
+	for (auto &temp : matrix) {
 		out << "[";
 		for (auto beg = temp.begin(); beg != temp.end(); ++beg) {
 			out << *beg;
@@ -55,133 +62,105 @@ string Matrix::cout_temp_addition_for_transmission() const {                    
 	return out.str();
 }
 
-void Matrix::cin_in(string &temp_str) {                                                     // Input Matrix.
+// Input Matrix.
+void Matrix::cin_in(string &temp_str) {
 	istringstream in(temp_str, istringstream::in);
 	in >> (*this);
 }
 
 Matrix operator+ (const Matrix &temp_m1, const Matrix &temp_m2) {
 	Matrix temp_m3;
-	if (temp_m1.row == temp_m2.row && temp_m1.col == temp_m2.col)                           // First judge M1 and M2 matrix are not the same type of matrix.
-	{
+
+	// First judge M1 and M2 matrix are not the same type of matrix.
+	if (temp_m1.row == temp_m2.row && temp_m1.col == temp_m2.col) {
 		temp_m3.resize(temp_m1.row, temp_m1.col);
-		for (size_t i = 0; i != temp_m1.row; ++i)
-		{
-			for (size_t j = 0; j != temp_m1.col; ++j)
-			{
+		for (auto i = 0; i != temp_m1.row; ++i) {
+			for (auto j = 0; j != temp_m1.col; ++j) {
 				temp_m3.matrix[i][j] = temp_m1.matrix[i][j] + temp_m2.matrix[i][j];
 			}
 		}
 	}
-	else
-	{
-		throw runtime_error("Rows and columns are not equal.");
+	else {
+		try {
+			throw runtime_error("Error: Rows and columns are not equal.");
+		}
+		catch (runtime_error const &err) {
+			cout << err.what() << endl;
+		}
 	}
 
 	return temp_m3;
 }
 
 Matrix operator+= (Matrix &temp_m1, const Matrix &temp_m2) {
-	if (temp_m1.row == temp_m2.row && temp_m1.col == temp_m2.col)
-	{
-		for (size_t i = 0; i != temp_m1.row; ++i)
-		{
-			for (size_t j = 0; j != temp_m1.col; ++j)
-			{
-				temp_m1.matrix[i][j] += temp_m2.matrix[i][j];
-			}
-		}
-	}
-	else
-	{
-		throw runtime_error("Rows and columns are not equal.");
-	}
+	auto temp_m3 = temp_m1 + temp_m2;
+
+	temp_m1 = temp_m3;
 
 	return temp_m1;
 }
 
 Matrix operator- (const Matrix &temp_m1, const Matrix &temp_m2) {
 	Matrix temp_m3;
-	if (temp_m1.row == temp_m2.row && temp_m1.col == temp_m2.col)
-	{
+
+	if (temp_m1.row == temp_m2.row && temp_m1.col == temp_m2.col) {
 		temp_m3.resize(temp_m1.row, temp_m1.col);
-		for (size_t i = 0; i != temp_m1.row; ++i)
-		{
-			for (size_t j = 0; j != temp_m1.col; ++j)
-			{
+		for (auto i = 0; i != temp_m1.row; ++i) {
+			for (auto j = 0; j != temp_m1.col; ++j) {
 				temp_m3.matrix[i][j] = temp_m1.matrix[i][j] - temp_m2.matrix[i][j];
 			}
 		}
 	}
-	else
-	{
-		throw runtime_error("Rows and columns are not equal.");
+	else {
+		try {
+			throw runtime_error("Error: Rows and columns are not equal.");
+		}
+		catch (runtime_error const &err) {
+			cout << err.what() << endl;
+		}
 	}
 
 	return temp_m3;
 }
 
 Matrix operator-= (Matrix &temp_m1, const Matrix &temp_m2) {
-	if (temp_m1.row == temp_m2.row && temp_m1.col == temp_m2.col)
-	{
-		for (size_t i = 0; i != temp_m1.row; ++i)
-		{
-			for (size_t j = 0; j != temp_m1.col; ++j)
-			{
-				temp_m1.matrix[i][j] -= temp_m2.matrix[i][j];
-			}
-		}
-	}
-	else
-	{
-		throw runtime_error("Rows and columns are not equal.");
-	}
+	auto temp_m3 = temp_m1 - temp_m2;
+
+	temp_m1 = temp_m3;
 
 	return temp_m1;
 }
 
 Matrix operator* (const Matrix &temp_m1, const Matrix &temp_m2) {
 	Matrix temp_m3;
-	if (temp_m1.col == temp_m2.row)                                                         // The number of columns in the first matrix M1 is equal to the number of rows in a matrix m2. 
-	{
+
+	// The number of columns in the first matrix M1 is equal to the number of rows in a matrix m2.
+	if (temp_m1.col == temp_m2.row) {
 		temp_m3.resize(temp_m1.row, temp_m2.col);
-		for (size_t i = 0; i != temp_m1.row; ++i)
-		{
-			for (size_t j = 0; j != temp_m2.col; ++j)
-			{
-				for (size_t m = 0; m != temp_m1.col; ++m)
+		for (auto i = 0; i != temp_m1.row; ++i) {
+			for (auto j = 0; j != temp_m2.col; ++j) {
+				for (auto m = 0; m != temp_m1.col; ++m)
 					temp_m3.matrix[i][j] += temp_m1.matrix[i][m] * temp_m2.matrix[m][j];
 			}
 		}
 	}
-	else
-	{
-		throw runtime_error("temp_m1's col and temp_m2's row are not equal.");
+	else {
+		try {
+			throw runtime_error("Error: temp_m1's col and temp_m2's row are not equal.");
+		}
+		catch (runtime_error const &err) {
+			std::cout << err.what() << std::endl;
+		}
 	}
 
 	return temp_m3;
 }
 
 Matrix operator*= (Matrix &temp_m1, const Matrix &temp_m2) {
-	Matrix temp_m3;
-	if (temp_m1.col == temp_m2.row)
-	{
-		temp_m3.resize(temp_m1.row, temp_m2.col);
-		for (size_t i = 0; i != temp_m1.row; ++i)
-		{
-			for (size_t j = 0; j != temp_m2.col; ++j)
-			{
-				for (size_t m = 0; m != temp_m1.col; ++m)
-					temp_m3.matrix[i][j] *= temp_m1.matrix[i][m] * temp_m2.matrix[m][j];
-			}
-		}
-	}
-	else
-	{
-		throw runtime_error("temp_m1's col and temp_m2's row are not equal.");
-	}
+	auto temp_m3 = temp_m1 * temp_m2;
 
 	temp_m1 = temp_m3;
+
 	return temp_m1;
 }
 
@@ -189,8 +168,8 @@ bool operator== (const Matrix &temp_m1, const Matrix &temp_m2) {
 	if (temp_m1.row != temp_m2.row || temp_m1.col != temp_m2.col) {
 		return false;
 	}
-	for (size_t i = 0; i != temp_m1.row; ++i) {
-		for (size_t j = 0; j != temp_m2.col; ++j) {
+	for (auto i = 0; i != temp_m1.row; ++i) {
+		for (auto j = 0; j != temp_m2.col; ++j) {
 			if (temp_m1.matrix[i][j] != temp_m2.matrix[i][j]) {
 				return false;
 			}
@@ -205,8 +184,8 @@ bool operator!= (const Matrix &temp_m1, const Matrix &temp_m2) {
 
 std::ostream& operator<< (std::ostream &out, const Matrix &temp_m) {
 	out << " { " << endl;
-	for (size_t i = 0; i != temp_m.row; ++i) {
-		for (size_t j = 0; j != temp_m.col; ++j) {
+	for (auto i = 0; i != temp_m.row; ++i) {
+		for (auto j = 0; j != temp_m.col; ++j) {
 			if (j == (temp_m.col - 1)) {
 				out << temp_m.matrix[i][j] << endl;
 				if (i != temp_m.row - 1) {
@@ -240,7 +219,8 @@ std::istream& operator>> (std::istream &in, Matrix &temp_m) {
 	return in;
 }
 
-void Matrix::resize(const size_t &temp_row, const size_t &temp_col){                        // Reset matrix size.
+// Reset matrix size.
+void Matrix::resize(const size_t &temp_row, const size_t &temp_col) {
 	row = temp_row;
 	col = temp_col;
 	matrix.resize(row);
@@ -249,25 +229,32 @@ void Matrix::resize(const size_t &temp_row, const size_t &temp_col){            
 	}
 }
 
-void Matrix::add_row(size_t &temp_row, vF &temp_vcow) {                                     // Add a row.
+// Add a row.
+void Matrix::add_row(const size_t &temp_row, const vF &temp_vcow) {
 	if (temp_row >= (row + 1) || temp_row < 0) {
-		throw runtime_error("Row is out of bound.");
+		try {
+			throw runtime_error("Error: Row is out of bound.");
+		}
+		catch (runtime_error const &err) {
+			std::cout << err.what() << std::endl;
+			return;
+		}
 	}
 	v_vF temp_vvF;
 	temp_vvF.resize(row + 1);
 	for (auto &i : temp_vvF) {
 		i.resize(col);
 	}
-	for (size_t i = 0; i != temp_row; ++i) {
-		for (size_t j = 0; j != col; ++j) {
+	for (auto i = 0; i != temp_row; ++i) {
+		for (auto j = 0; j != col; ++j) {
 			temp_vvF[i][j] = matrix[i][j];
 		}
 	}
-	for (size_t j = 0; j != col; ++j) {
+	for (auto j = 0; j != col; ++j) {
 		temp_vvF[temp_row][j] = temp_vcow[j];
 	}
-	for (size_t i = temp_row + 1, ii = temp_row; ii < row; ++i, ++ii) {
-		for (size_t j = 0; j != col; ++j) {
+	for (auto i = temp_row + 1, ii = temp_row; ii < row; ++i, ++ii) {
+		for (auto j = 0; j != col; ++j) {
 			temp_vvF[i][j] = matrix[ii][j];
 		}
 	}
@@ -275,55 +262,70 @@ void Matrix::add_row(size_t &temp_row, vF &temp_vcow) {                         
 	++row;
 }
 
-void Matrix::add_to_other_row(size_t &temp_row, Fraction &F) {                              // One row of the matrix is multiplied by K,it means matrix is multiplied by K.
-	for (size_t i = 0; i != col; ++i) {
+// One row of the matrix is multiplied by K,it means matrix is multiplied by K.
+void Matrix::add_to_other_row(const size_t &temp_row, const Fraction &F) {
+	for (auto i = 0; i != col; ++i) {
 		matrix[temp_row][i] += (F*matrix[temp_row][i]);
 	}
 }
 
-void Matrix::add_to_other_row(size_t &temp_row1, size_t &temp_row2, Fraction &F) {         // One row of the matrix is multiplied by K and added to the other row.
+// One row of the matrix is multiplied by K and added to the other row.
+void Matrix::add_to_other_row(const size_t &temp_row1, const size_t &temp_row2, const Fraction &F) {
 	if (temp_row1 != temp_row2) {
-		for (size_t i = 0; i != col; ++i) {
+		for (auto i = 0; i != col; ++i) {
 			matrix[temp_row2][i] += (F*matrix[temp_row1][i]);
 		}
 	}
 	else {
-		throw runtime_error("The same of two rows.");
+		try {
+			throw runtime_error("Error: The same of two rows.");
+		}
+		catch (runtime_error const &err) {
+			std::cout << err.what() << std::endl;
+		}
 	}
 }
 
-void Matrix::swap_row(size_t &temp_row1, size_t &temp_row2) {                               // Swap two rows;
+// Swap two rows.
+void Matrix::swap_row(const size_t &temp_row1, const size_t &temp_row2) {
 	if (temp_row1 != temp_row2) {
 		vF temp_vrow;
 		temp_vrow.resize(col);
-		for (size_t i = 0; i != col; ++i) {
+		for (auto i = 0; i != col; ++i) {
 			temp_vrow[i] = matrix[temp_row1][i];
 		}
-		for (size_t i = 0; i != col; ++i) {
+		for (auto i = 0; i != col; ++i) {
 			matrix[temp_row1][i] = matrix[temp_row2][i];
 		}
-		for (size_t i = 0; i != col; ++i) {
+		for (auto i = 0; i != col; ++i) {
 			matrix[temp_row2][i] = temp_vrow[i];
 		}
 	}
 	else {
-		throw runtime_error("The same of row numbers");
+		try {
+			throw runtime_error("Error: The same of two rows.");
+		}
+		catch (runtime_error const &err) {
+			std::cout << err.what() << std::endl;
+		}
 	}
 }
 
-void Matrix::del_row(size_t &temp_row) {                                                    // Minus one row.
+// Minus one row.
+void Matrix::del_row(const size_t &temp_row) {
 	v_vF temp_vvF;
+
 	temp_vvF.resize(row - 1);
 	for (auto &i : temp_vvF) {
 		i.resize(col);
 	}
-	for (size_t i = 0; i != temp_row; ++i) {
-		for (size_t j = 0; j != col; ++j) {
+	for (auto i = 0; i != temp_row; ++i) {
+		for (auto j = 0; j != col; ++j) {
 			temp_vvF[i][j] = matrix[i][j];
 		}
 	}
-	for (size_t i = temp_row + 1, ii = temp_row; i < row; ++i, ++ii) {
-		for (size_t j = 0; j != col; ++j) {
+	for (auto i = temp_row + 1, ii = temp_row; i < row; ++i, ++ii) {
+		for (auto j = 0; j != col; ++j) {
 			temp_vvF[ii][j] = matrix[i][j];
 		}
 	}
@@ -331,25 +333,32 @@ void Matrix::del_row(size_t &temp_row) {                                        
 	--row;
 }
 
-void Matrix::add_col(size_t &temp_col, vF &temp_vrow) {                                     // Add a column.
+// Add a column.
+void Matrix::add_col(const size_t &temp_col, const vF &temp_vrow) {
 	if (temp_col >= (col + 1) || temp_col < 0) {
-		throw runtime_error("Column is out of bounds");
+		try {
+			throw runtime_error("Error: Column is out of bounds");
+		}
+		catch (runtime_error const &err) {
+			std::cout << err.what() << std::endl;
+			return;
+		}
 	}
 	v_vF temp_vvF;
 	temp_vvF.resize(row);
 	for (auto &i : temp_vvF) {
 		i.resize(col + 1);
 	}
-	for (size_t i = 0; i != row; ++i) {
-		for (size_t j = 0; j != temp_col; ++j) {
+	for (auto i = 0; i != row; ++i) {
+		for (auto j = 0; j != temp_col; ++j) {
 			temp_vvF[i][j] = matrix[i][j];
 		}
 	}
-	for (size_t j = 0; j != row; ++j) {
+	for (auto j = 0; j != row; ++j) {
 		temp_vvF[j][temp_col] = temp_vrow[j];
 	}
-	for (size_t i = 0; i != row; ++i) {
-		for (size_t j = temp_col + 1, jj = temp_col; jj != col; ++j, ++jj) {
+	for (auto i = 0; i != row; ++i) {
+		for (auto j = temp_col + 1, jj = temp_col; jj != col; ++j, ++jj) {
 			temp_vvF[i][j] = matrix[i][jj];
 		}
 	}
@@ -357,55 +366,70 @@ void Matrix::add_col(size_t &temp_col, vF &temp_vrow) {                         
 	++col;
 }
 
-void Matrix::add_to_other_col(size_t &temp_col, Fraction &F) {                              // One column of the matrix is multiplied by K,it means matrix is multiplied by K.
-	for (size_t i = 0; i != row; ++i) {
+// One column of the matrix is multiplied by K,it means matrix is multiplied by K.
+void Matrix::add_to_other_col(const size_t &temp_col, const Fraction &F) {
+	for (auto i = 0; i != row; ++i) {
 		matrix[i][temp_col] += (F*matrix[i][temp_col]);
 	}
 }
 
-void Matrix::add_to_other_col(size_t &temp_col1, size_t &temp_col2, Fraction &F) {          // One column of the matrix is multiplied by K and added to the other column.
+// One column of the matrix is multiplied by K and added to the other column.
+void Matrix::add_to_other_col(const size_t &temp_col1, const size_t &temp_col2, const Fraction &F) {
 	if (temp_col1 != temp_col2) {
-		for (size_t i = 0; i != row; ++i) {
+		for (auto i = 0; i != row; ++i) {
 			matrix[i][temp_col2] += (F*matrix[i][temp_col1]);
 		}
 	}
 	else {
-		throw runtime_error("The same of two columns.");
+		try {
+			throw runtime_error("Error: The same of two columns.");
+		}
+		catch (runtime_error const &err) {
+			std::cout << err.what() << std::endl;
+		}
 	}
 }
 
-void Matrix::swap_col(size_t &temp_col1, size_t &temp_col2) {                               // Swap two columns;
+// Swap two columns.
+void Matrix::swap_col(const size_t &temp_col1, const size_t &temp_col2) {
 	if (temp_col1 != temp_col2) {
 		vF temp_vcol;
 		temp_vcol.resize(row);
-		for (size_t i = 0; i != row; ++i) {
+		for (auto i = 0; i != row; ++i) {
 			temp_vcol[i] = matrix[i][temp_col1];
 		}
-		for (size_t i = 0; i != row; ++i) {
+		for (auto i = 0; i != row; ++i) {
 			matrix[i][temp_col1] = matrix[i][temp_col2];
 		}
-		for (size_t i = 0; i != row; ++i) {
+		for (auto i = 0; i != row; ++i) {
 			matrix[i][temp_col2] = temp_vcol[i];
 		}
 	}
 	else {
-		throw runtime_error("The same of column numbers");
+		try {
+			throw runtime_error("Error: The same of two columns.");
+		}
+		catch (runtime_error const &err) {
+			std::cout << err.what() << std::endl;
+		}
 	}
 }
 
-void Matrix::del_col(size_t &temp_col) {                                                    // Minus one column.
+// Minus one column.
+void Matrix::del_col(const size_t &temp_col) {
 	v_vF temp_vvF;
+
 	temp_vvF.resize(row);
 	for (auto &i : temp_vvF) {
 		i.resize(col - 1);
 	}
-	for (size_t i = 0; i != row; ++i) {
-		for (size_t j = 0; j != temp_col; ++j) {
+	for (auto i = 0; i != row; ++i) {
+		for (auto j = 0; j != temp_col; ++j) {
 			temp_vvF[i][j] = matrix[i][j];
 		}
 	}
-	for (size_t i = 0; i != row; ++i) {
-		for (size_t j = temp_col + 1, jj = temp_col; j != col; ++j, ++jj) {
+	for (auto i = 0; i != row; ++i) {
+		for (auto j = temp_col + 1, jj = temp_col; j != col; ++j, ++jj) {
 			temp_vvF[i][jj] = matrix[i][j];
 		}
 	}
@@ -413,41 +437,50 @@ void Matrix::del_col(size_t &temp_col) {                                        
 	--col;
 }
 
-Matrix Matrix::trans() {                                                                    // Transpose a matrix.
+// Transpose a matrix.
+Matrix Matrix::trans() {
 	Matrix temp_M;
+
 	if (matrix.empty()) {
-		throw runtime_error("The matrix is empty.");
+		try {
+			throw runtime_error("Error: The matrix is empty.");
+		}
+		catch (runtime_error const &err) {
+			std::cout << err.what() << std::endl;
+			return *this;
+		}
 	}
-	else {
-		temp_M.resize(col, row);
-		for (size_t i = 0; i != temp_M.row; ++i) {
-			for (size_t j = 0; j != temp_M.col; ++j) {
-				temp_M.matrix[i][j] = matrix[j][i];
-			}
+
+	temp_M.resize(col, row);
+	for (auto i = 0; i != temp_M.row; ++i) {
+		for (auto j = 0; j != temp_M.col; ++j) {
+			temp_M.matrix[i][j] = matrix[j][i];
 		}
 	}
 
 	return temp_M;
 }
 
-bool Matrix::square() const {                                                               // Check whether the square.
+// Check whether the square.
+bool Matrix::square() const {
 	return (!matrix.empty() && row == col);
 }
 
-pair<v_vF, v_vF> Matrix::LUdcmp() {                                                         // LU Decomposition.
+// LU Decomposition.
+pair<v_vF, v_vF> Matrix::LUdcmp() const {
 	v_vF lu(matrix), u, l;
 	if (square()) {
-		size_t n(row);
+		auto n(row);
 		size_t i, j, k;
 		Fraction big, temp;
 
 		l.resize(row);
 		u.resize(row);
-		for (auto &i : l) {
-			i.resize(col);
+		for (auto &ii : l) {
+			ii.resize(col);
 		}
-		for (auto &i : u) {
-			i.resize(col);
+		for (auto &ii : u) {
+			ii.resize(col);
 		}
 
 		for (i = 0; i != n; ++i) {
@@ -458,7 +491,13 @@ pair<v_vF, v_vF> Matrix::LUdcmp() {                                             
 				}
 			}
 			if (big == 0) {
-				throw runtime_error("Singular matrix in LUdcmp");
+				try {
+					throw runtime_error("Error: Singular matrix in LUdcmp");
+				}
+				catch (runtime_error const &err) {
+					std::cout << err.what() << std::endl;
+					return make_pair(l, u);
+				}
 			}
 		}
 
@@ -496,16 +535,22 @@ pair<v_vF, v_vF> Matrix::LUdcmp() {                                             
 
 		return make_pair(l, u);
 	}
-	else {
-		throw runtime_error("The matrix is not square.");
+	
+	try {
+		throw runtime_error("Error: The matrix is not square.");
+	}
+	catch (runtime_error const &err) {
+		std::cout << err.what() << std::endl;
 		return make_pair(l, u);
 	}
 }
 
-Fraction Matrix::det() {                                                                    // Determinant of  a matrix.
+// Determinant of  a matrix.
+Fraction Matrix::det() const {
 	Fraction d = 1;
 	size_t i, n(row);
-	pair<v_vF, v_vF> temp_pari = LUdcmp();
+	auto temp_pari = LUdcmp();
+
 	/*
 	Matrix a, b;
 	a.matrix = temp_pari.first, b.matrix = temp_pari.second;
@@ -521,14 +566,16 @@ Fraction Matrix::det() {                                                        
 	return d;
 }
 
-Matrix Matrix::inverse() {                                                                  // Inverse of matrix.
-	pair<v_vF, v_vF> temp_pair = LUdcmp();
+// Inverse of matrix.
+Matrix Matrix::inverse() const {
+	auto temp_pair = LUdcmp();
 	Matrix temp_L, temp_U, temp_m, temp_L1, temp_U1;
 	temp_L.matrix = temp_pair.first;
 	temp_U.matrix = temp_pair.second;
 	size_t j, k, n(row);
 	int i;
 	Fraction s;
+
 	if (square()) {
 		temp_L1.resize(row, col);
 		temp_U1.resize(row, col);
@@ -560,15 +607,21 @@ Matrix Matrix::inverse() {                                                      
 
 		return temp_m;
 	}
-	else {
-		throw runtime_error("The matrix is not square.");
+
+	try {
+		throw runtime_error("Error: The matrix is not square.");
+	}
+	catch (runtime_error const &err) {
+		std::cout << err.what() << std::endl;
 		return temp_m;
 	}
 }
 
-vF Matrix::solution(vF &temp_v) {                                                           // Solution of linear algebraic equation.
+// Solution of linear algebraic equation.
+vF Matrix::solution(vF &temp_v) {
 	vF solution;
-	if (this->col == temp_v.size()) {
+
+	if (col == temp_v.size()) {
 		*this = this->inverse();
 		Matrix temp_m1;
 		temp_m1.resize(temp_v.size(), 1);
@@ -582,9 +635,12 @@ vF Matrix::solution(vF &temp_v) {                                               
 
 		return solution;
 	}
-	else {
-		throw runtime_error("temp_m's col and temp_v's row are not equal.");
-
+	
+	try {
+		throw runtime_error("Error: temp_m's col and temp_v's row are not equal.");
+	}
+	catch (runtime_error const &err) {
+		std::cout << err.what() << std::endl;
 		return solution;
 	}
 }
